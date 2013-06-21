@@ -96,46 +96,73 @@ def custom_len(input_list):
 # For the next four functions, get clever using slice operations described in the first half
 def custom_append(input_list, value):
     """custom_append(input_list, value) imitates input_list.append(value)"""
-    input_list += [value]
-    return input_list
+    input_list[custom_len(input_list):] = [value]
+#    return input_list
 
 def custom_extend(input_list, values):
     """custom_extend(input_list, values) imitates input_list.extend(values)"""
-    input_list += values
+    input_list[custom_len(input_list):] = values
     return input_list
 
 def custom_insert(input_list, index, value):
     """custom_insert(input_list, index, value) imitates
     input_list.insert(index, value)
     """
-    input_list =+ [None]
-
-    input_list[index:-2] = [42,37]
+    custom_append(input_list,None)
+    input_list[index+1:] = input_list[index:-1]
+    input_list[index]=value
     return input_list
 
 def custom_remove(input_list, value):
     """custom_remove(input_list, value) imitates input_list.remove(value)"""
-    pass
+
+    i = 0
+    for x in input_list:
+        if x == value:
+            del input_list[i]
+            return
+        i += 1
 
 def custom_pop(input_list):
+    
     """custom_pop(input_list) imitates input_list.pop()"""
-    pass
+    last = input_list[-1]
+    del input_list[-1]
+    return last
 
 def custom_index(input_list, value):
     """custom_index(input_list, value) imitates input_list.index(value)"""
-    pass
+    i = 0
+    for x in input_list:
+        if x == value:
+            return i
+        i += 1
 
 def custom_count(input_list, value):
-    """custom_count(input_list, value) imitates input_list.count(value)"""
-    pass
+    i = 0
+    for x in input_list:
+        if x == value:
+            i += 1
+    return i 
 
 def custom_reverse(input_list):
     """custom_reverse(input_list) imitates input_list.reverse()"""
-    pass
+    i = 0
+    j = -1
+    for x in range(0, custom_len(input_list)/2):
+        temp = input_list[i]
+        input_list[i] = input_list[j]
+        input_list[j] = temp
+        i += 1
+        j -= 1
 
 def custom_contains(input_list, value):
     """custom_contains(input_list, value) imitates (value in input_list)"""
-    pass
+    for x in input_list:
+        if x == value:
+            return True
+    return False
+
 
 def custom_equality(some_list, another_list):
     """custom_equality(some_list, another_list) imitates
